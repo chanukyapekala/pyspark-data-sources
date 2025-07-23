@@ -66,14 +66,12 @@ def test_opensky_datasource_stream(spark):
     assert result.count() > 0  # Verify we got some data
 
 def test_jsonplaceholder_posts():
-     from pyspark_datasources.jsonplaceholder import JSONPlaceholderDataSource
      spark.dataSource.register(JSONPlaceholderDataSource)
      posts_df = spark.read.format("jsonplaceholder").option("endpoint", "posts").load()
      assert posts_df.count() > 0 # Ensure we have some posts
 
 
 def test_jsonplaceholder_referential_integrity():
-    from pyspark_datasources.jsonplaceholder import JSONPlaceholderDataSource
     spark.dataSource.register(JSONPlaceholderDataSource)
     users_df = spark.read.format("jsonplaceholder").option("endpoint", "users").load()
     posts_df = spark.read.format("jsonplaceholder").option("endpoint", "posts").load()
